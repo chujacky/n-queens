@@ -169,11 +169,33 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+      var count = 0;
+      //iterate over all row
+      for (var i = 0; i < this.rows().length; i++) {
+        //check in column index - current row is less than length of row
+        if (minorDiagonalColumnIndexAtFirstRow - i < this.rows().length) {
+          //check if the (current row, columnindex + current row) equals to 1
+          if (this.get(i)[minorDiagonalColumnIndexAtFirstRow - i] === 1) {
+            // add 1 to count
+            count++;
+          }
+        }
+        // return true if count is bigger than 1
+        if (count > 1) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
+      for (var i = 0; i < this.rows().length * 2 -2 ; i++) {
+        //check if hasMajor function on each row is true
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          return true;      
+        }
+      }
       return false; // fixme
     }
 
