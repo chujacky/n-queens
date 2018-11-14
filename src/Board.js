@@ -131,11 +131,34 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var count = 0;
+      //iterate over all row
+      for (var i = 0; i < this.rows().length; i++) {
+        //check in column index + current row is bigger than 0
+        if (majorDiagonalColumnIndexAtFirstRow + i >= 0) {
+          //check if the (current row, columnindex + current row) equals to 1
+          if (this.get(i)[majorDiagonalColumnIndexAtFirstRow + i] === 1) {
+            // add 1 to count
+            count++;
+          }
+        }
+        // return true if count is bigger than 1
+        if (count > 1) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      //iterate over all possible first column indices
+      for (var i = -this.rows().length + 1; i < this.rows().length; i++) {
+        //check if hasMajor function on each row is true
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;      
+        }
+      }
       return false; // fixme
     },
 
