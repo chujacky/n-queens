@@ -15,10 +15,49 @@
 
 
 
-window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+window.findNRooksSolution = function(num) {
+  var solution = []; //fixme
+  var board = new Board({n: num})
 
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+
+
+  var findSolution = function(board, n) {
+  
+
+    if (!board.hasAnyRooksConflicts()){
+      if (n === 0) {
+        for (var i = 0; i < board.rows().length;i++){
+          solution.push(board.get(i).slice());
+          
+        }
+        return;
+      } 
+    } else {
+     return; 
+   } 
+
+    for (var i = 0; i < board.rows().length; i++) {
+      for (var j = 0; j < board.rows().length; j++) {
+        if (board.get(i)[j] === 1){
+          continue;
+        }
+        board.togglePiece(i,j);
+        findSolution(board, n - 1);
+        board.togglePiece(i, j);
+        if (solution.length > 0){
+          break;
+        }
+      }
+      if (solution.length > 0){
+          break;
+        } 
+    } 
+
+  }
+
+  findSolution(board, num);
+
+  console.log('Single solution for ' + num + ' rooks:', JSON.stringify(solution));
   return solution;
 };
 
