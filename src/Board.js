@@ -38,6 +38,8 @@
     },
 
     hasAnyRooksConflicts: function() {
+
+      
       return this.hasAnyRowConflicts() || this.hasAnyColConflicts();
     },
 
